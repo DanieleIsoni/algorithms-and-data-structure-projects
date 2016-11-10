@@ -28,7 +28,7 @@ S.push(u)
 
 */
 
-void topSort(vector< vector<int> > & Graph,int node, stack<int> &S, vector<bool> &visitato, int N)
+void topSort_bis(vector< vector<int> > & Graph,int node, stack<int> &S, vector<bool> &visitato, int N)
 {
     visitato[node]=true;
     for(auto &v : Graph[node])
@@ -37,9 +37,24 @@ void topSort(vector< vector<int> > & Graph,int node, stack<int> &S, vector<bool>
           topSort(Graph,v,S,visitato,N);
         }
     S.push(node);
-
 }
+void topSort(vector< vector<int> > & Graph,int node, stack<int> &S, vector<bool> &visitato, int N)
+{
 
+//  vector< bool> visitato;
+  visitato.resize(N);
+
+  for(int i=0;i<N;i++)
+    visitato[i]=false;
+
+    for(int i=0;i<N;i++)
+    {
+        if(!visitato[i])
+          {
+              topSort(adiacenti,i,S,visitato,N);
+          }
+    }
+}
 
 
 
@@ -66,17 +81,8 @@ int main()
 		}
     stack<int> S;
 
+    topSort(adiacenti,i,S,visitato,N);
 
-    for(int i=0;i<N;i++)
-      visitato[i]=false;
-
-    for(int i=0;i<N;i++)
-    {
-        if(!visitato[i])
-          {
-              topSort(adiacenti,i,S,visitato,N);
-          }
-    }
     while(!S.empty())
     {
         out<<S.top()<<endl;
