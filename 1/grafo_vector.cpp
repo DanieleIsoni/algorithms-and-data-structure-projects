@@ -14,6 +14,7 @@ int main(){
     int from, to;
     in>>from>>to;
     adj[from].push_back(to);
+	adj[to].push_back(from);
   }
 
   for(int i=0;i<N;i++){
