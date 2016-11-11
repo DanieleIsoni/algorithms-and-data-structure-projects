@@ -3,24 +3,45 @@
 #include <vector>
 #include <stack>
 #include <set>
+#include <queue>
 
 using namespace std;
 
 vector<vector<int> > adj;
-//stack<stack<int>> cycles;
-set<int> supporto;
 
-void calcolaCiclo(int from, int to, int * added){
-  cout<<from<<" "<<to<<endl;
-  if(from!=-1 && to!=-1){
-    if(supporto.find(from)==supporto.end() )
-      supporto.insert(from);
-    if(supporto.find(to)==supporto.end() )
-      supporto.insert(to);
-    if(from != to )
-      calcolaCiclo(added[from],added[to],added);
-    else
-      cout<<"fine ciclo"<<endl;
+void mostraPercorso(int u, int v, int * padri){
+  while (padri[u]!=padri[v]) {
+    cout<<padri[u]<<" "<<padri[v]<<endl;
+    if(padri[u]!=-1)
+      u=padri[u];
+    if(padri[v]!=-1)
+      v=padri[v];
+  }
+}
+
+
+void bfs(int r, int N, int * padri){
+  queue<int> q;
+  q.push(r);
+  bool visitato[N];
+  for (int i = 0; i < N; i++) {
+    visitato[i]=false;
+  }
+  visitato[r]=true;
+
+  while (!q.empty()) {
+    int u = q.front();
+    q.pop();
+    for(int v : adj[u]){
+      if(!visitato[v]){
+        visitato[v]=true;
+        q.push(v);
+      }
+      else if(u<v){
+        cout<<"Trovato collegamento da "<<u<<" a "<<v<<endl;
+        mostraPercorso(u,v,padri);
+      }
+    }
   }
 }
 
@@ -42,7 +63,6 @@ int main(){
 	  if(added[to]!=-1){
 			counterCycles++;
       //trovato ciclo
-      calcolaCiclo(from,to, added);
     }
     else
       added[to]=from;
@@ -50,8 +70,7 @@ int main(){
   	adj[to].push_back(from);
   }
 
-	cout<<"COUNTED --> "<<counterCycles<<endl;
-for(int i=0;i<N;i++) cout<<added[i]<<" ";
+  bfs(0,N,added);
 
 
 	/*
