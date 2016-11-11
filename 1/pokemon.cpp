@@ -5,8 +5,10 @@
 using namespace std;
 
 vector<vector<int>> adj;
+vector<vector<int>> cicli;
+int numCicli = 0;
 
-void stampaciclo(int s, int v, int * parents){
+void stampaCiclo(int s, int v, int * parents){
   cout << "s " << s << " v " << v << endl;
   while(s!=v){
     cout << s << " ";
@@ -15,14 +17,39 @@ void stampaciclo(int s, int v, int * parents){
   cout << s << endl;
 }
 
+/*
+  Questa funzione mi dà segmentation fault solo perchè uso una matrice di vector
+  se usassi una matrice semplice (int cicli[100][100]) non dà errore e non
+  capisco perché
+*/
+void salvaCiclo(int s, int v, int * parents){
+  while(s != v){
+    cout << "ciao" << endl;
+    cicli[numCicli].push_back(s);
+    s = parents[s];
+  }
+  cicli[numCicli].push_back(s);
+
+  /*
+    Ho messo <= a 2 perchè ho visto che o mi ritorna un ciclo o mi ritorna
+    una coppia sempre, quindi con questo controllo tolgo tutte le coppie
+  */
+  if(cicli[numCicli].size()<=2){
+    cicli[numCicli].clear();
+  } else {
+    numCicli++;
+  }
+}
+
 void dfs(int s, int * parents, bool * visited){
   visited[s]=true;
   for(int v: adj[s]){
     if (!visited[v]){
       parents[v]=s;
       dfs(v, parents, visited);
-    } else if (s > v){
-      stampaciclo(s, v, parents);
+    } else if (s > v) {
+      stampaCiclo(s, v, parents);
+      //salvaCiclo(s, v, parents);
     }
   }
 }
