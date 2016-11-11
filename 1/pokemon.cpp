@@ -25,7 +25,7 @@ void stampaCiclo(int s, int v, int * parents){
 */
 void salvaCiclo(int s, int v, int * parents){
   if(cicli[numCicli].empty())
-    cicli[numCicli].resize(M);
+    cicli[numCicli].resize(0);
   while(s != v){
     //cout << "ciao" << endl;
     cicli[numCicli].push_back(s);
@@ -83,18 +83,19 @@ int main(){
   for(int i=0; i<N; i++){
     visited[i]=false;
   }
-
-  dfs(0,parents, visited);
+  for (int i = 0; i < N; i++)
+    dfs(0,parents, visited);
   /*cout << endl << "parents:" << " ";
   for (int i = 0; i < N; i++) {
     cout << parents[i] << " ";
   }*/
   cout << endl;
-  for(vector <int> &a : cicli)
-  {
-    for(int &b :a)
-      cout<<b<<"\t";
-    cout<<endl;
+  for (int i = 0; i < cicli.size(); i++){
+    for (int j = 0; j<cicli[i].size(); j++){
+      cout << cicli[i][j] << " ";
+    }
+    if(cicli[i].size() != 0)
+      cout << "\n\nlength: " << cicli[i].size() << "\n\n";
   }
 
 
