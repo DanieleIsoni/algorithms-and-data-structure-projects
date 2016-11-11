@@ -50,7 +50,7 @@ int main(){
   }
 
   dfs(0,parents, visited);
-  cout << endl;
+  cout << endl << "parents:" << " ";
   for (int i = 0; i < N; i++) {
     cout << parents[i] << " ";
   }
