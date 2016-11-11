@@ -5,8 +5,9 @@
 using namespace std;
 
 vector<vector<int>> adj;
-vector<vector<int>> cicli;
+vector< vector<int> > cicli;
 int numCicli = 0;
+int N,M;
 
 void stampaCiclo(int s, int v, int * parents){
   cout << "s " << s << " v " << v << endl;
@@ -23,8 +24,10 @@ void stampaCiclo(int s, int v, int * parents){
   capisco perché
 */
 void salvaCiclo(int s, int v, int * parents){
+  if(cicli[numCicli].empty())
+    cicli[numCicli].resize(M);
   while(s != v){
-    cout << "ciao" << endl;
+    //cout << "ciao" << endl;
     cicli[numCicli].push_back(s);
     s = parents[s];
   }
@@ -48,21 +51,26 @@ void dfs(int s, int * parents, bool * visited){
       parents[v]=s;
       dfs(v, parents, visited);
     } else if (s > v) {
-      stampaCiclo(s, v, parents);
-      //salvaCiclo(s, v, parents);
+      //stampaCiclo(s, v, parents);
+      salvaCiclo(s, v, parents);
     }
   }
 }
 
 int main(){
   ifstream in("input.txt");
-  int N,M;
+//  int N,M;
   in>>N>>M;
   adj.resize(N);
+  cicli.resize(M);
 
   int parents[N];
   for(int i=0;i<N;i++)
-    parents[i]=-1;
+      parents[i]=-1;
+
+  /*for(int i=0;i<M;i++)
+    cicli[i].resize(M);
+*/
 
   for(int i=0;i<M;i++){
     int from, to;
@@ -77,11 +85,18 @@ int main(){
   }
 
   dfs(0,parents, visited);
-  cout << endl << "parents:" << " ";
+  /*cout << endl << "parents:" << " ";
   for (int i = 0; i < N; i++) {
     cout << parents[i] << " ";
-  }
+  }*/
   cout << endl;
+  for(vector <int> &a : cicli)
+  {
+    for(int &b :a)
+      cout<<b<<"\t";
+    cout<<endl;
+  }
+
 
   /*
   for(int i=0;i<N;i++){
