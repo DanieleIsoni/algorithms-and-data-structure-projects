@@ -58,10 +58,10 @@ int main(){
 
   /*
   for(int i=0;i<N;i++){
-  cout<<"Nodo "<<i<<" ha "<<adj[i].size()<<" vicini \n";
-  for(int j=0;j<adj[i].size();j++)
-  cout<<"  "<<adj[i][j]<<"\n";
-}
+    cout<<"Nodo "<<i<<" ha "<<adj[i].size()<<" vicini \n";
+    for(int j=0;j<adj[i].size();j++)
+      cout<<"  "<<adj[i][j]<<"\n";
+  }
 */
 
   return 0;
