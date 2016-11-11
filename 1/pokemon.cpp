@@ -52,6 +52,18 @@ void dfs(int s, int * parents, bool * visited){
   }
 }
 
+int mcd(int a, int b) {
+    return b == 0 ? a : mcd(b, a % b);
+}
+
+int massimale(){
+  int MCD = cicli[0].size();
+  for (int i = 1; i < cicli.size(); i++) {
+    MCD = mcd(MCD, cicli[i].size());
+  }
+  return MCD;
+}
+
 int main(){
   ifstream in("input.txt");
 //  int N,M;
@@ -80,10 +92,13 @@ int main(){
   }
   for (int i = 0; i < N; i++)
     dfs(0,parents, visited);
+
+  cout << massimale() << endl;
+
   /*cout << endl << "parents:" << " ";
   for (int i = 0; i < N; i++) {
     cout << parents[i] << " ";
-  }*/
+  }
   cout << endl;
   for (int i = 0; i < cicli.size(); i++){
     for (int j = 0; j<cicli[i].size(); j++){
@@ -91,10 +106,9 @@ int main(){
     }
     if(cicli[i].size() != 0)
       cout << "\n\nlength: " << cicli[i].size() << "\n\n";
-  }
+  }*/
 
-
-  /*
+/*
   for(int i=0;i<N;i++){
     cout<<"Nodo "<<i<<" ha "<<adj[i].size()<<" vicini \n";
     for(int j=0;j<adj[i].size();j++)
