@@ -6,3 +6,5 @@ clean:
 	rm -f pokemon pokemon.
 test:
 	sh ./test.sh
+mac:
+	g++ -DEVAL -O2 -std=c++11 -o pokemon pokemon.cpp
