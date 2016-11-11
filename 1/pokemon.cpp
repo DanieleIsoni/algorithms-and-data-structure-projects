@@ -18,16 +18,10 @@ void stampaCiclo(int s, int v, int * parents){
   cout << s << endl;
 }
 
-/*
-  Questa funzione mi dà segmentation fault solo perchè uso una matrice di vector
-  se usassi una matrice semplice (int cicli[100][100]) non dà errore e non
-  capisco perché
-*/
 void salvaCiclo(int s, int v, int * parents){
   if(cicli[numCicli].empty())
     cicli[numCicli].resize(0);
   while(s != v){
-    //cout << "ciao" << endl;
     cicli[numCicli].push_back(s);
     s = parents[s];
   }
@@ -40,6 +34,7 @@ void salvaCiclo(int s, int v, int * parents){
   if(cicli[numCicli].size()<=2){
     cicli[numCicli].clear();
   } else {
+    sort(cicli[numCicli].begin(), cicli[numCicli].end());
     numCicli++;
   }
 }
