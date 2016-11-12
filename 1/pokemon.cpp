@@ -10,7 +10,7 @@ vector<vector<int>> cycles;
 int numeroCicli=0;
 int N,M;
 
-int time=0;
+int Time=0;
 
 void calcolaLung(int from, int to, int * padri){
   cycles[numeroCicli].push_back(from);
@@ -89,13 +89,16 @@ int main(){
 
   int MAX=cycles[0].size();
   for(int i=1;i<numeroCicli;i++){
-    cout<<"Il ciclo "<<i<<" ha "<<cycles[i].size()<<" elementi \n";
+    //cout<<"Il ciclo "<<i<<" ha "<<cycles[i].size()<<" elementi \n";
     MAX=MCD(MAX,cycles[i].size());
     //for(int j=0;j<cycles[i].size();j++)
     //  cout<<"  "<<cycles[i][j];
     cout<<endl;
   }
-cout<<"POKEMON MASSIMI --> "<<MAX<<endl;
+  ofstream out("output.txt");
+
+  //cout<<"POKEMON MASSIMI --> "<<MAX<<endl;
+  out<<MAX<<endl;
 
 
   return 0;
