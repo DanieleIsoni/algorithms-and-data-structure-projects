@@ -21,10 +21,14 @@ void stampaCiclo(int s, int v, int * parents){
 }
 
 void salvaCiclo(int s, int v, int * parents){
-  cout << "inizio salvaCiclo " << ++salvaCicloCounter <<"\n\n";
-  if(cicli[numCicli].empty())
+  //cout << "inizio salvaCiclo " << ++salvaCicloCounter <<"\n\n";
+  if(cicli[numCicli].empty()){
+    //cout << "resize\n\n";
     cicli[numCicli].resize(0);
-  while(s != v){
+  }
+  int i = 0;
+  while(s != v && s != -1){
+    //cout << "inserisco " << s << "\n\n";
     cicli[numCicli].push_back(s);
     s = parents[s];
   }
@@ -36,14 +40,14 @@ void salvaCiclo(int s, int v, int * parents){
   */
   if(cicli[numCicli].size()<=2){
     cicli[numCicli].clear();
-  } else {
+  } else if(s == -1 || cicli[numCicli].size()>2){
     sort(cicli[numCicli].begin(), cicli[numCicli].end());
     numCicli++;
   }
 }
 
 void dfs(int s, int * parents, bool * visited){
-  cout << "inizia dfs" << endl;
+  //cout << "inizia dfs" << endl;
   visited[s]=true;
   for(int v: adj[s]){
     if (!visited[v]){
