@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <stack>
+#include <map>
 
 using namespace std;
 
@@ -71,6 +72,40 @@ int MCD(int a, int b)
     return a;
 }
 
+map<pair<int,int> ,int> piazzaPokemon(int m)
+{
+  map<pair<int,int> ,int> pokemon;
+
+//vector<int>  cicli;
+//  cicli.resize(cicli.size());
+
+  for(vector<int> &c :cycles)
+  {
+    int questo=-1;//tanto lo incremento a 0 prima di assegnarlo
+    for(int i=1;i<c.size();i++)
+      {
+
+        pair<int,int> x;
+        if(c[i-1]<c[i])
+          {
+            x.first=c[i-1];
+            x.second=c[i];
+          }
+        else
+        {
+          x.first=c[i];
+          x.second=c[i-1];
+        }
+
+        pokemon[x]=(++questo)%m;
+
+      }
+    }
+
+    return pokemon;
+}
+
+
 int main(){
   ifstream in("input.txt");
 //  int N,M;
@@ -91,15 +126,36 @@ int main(){
   for(int i=1;i<numeroCicli;i++){
     //cout<<"Il ciclo "<<i<<" ha "<<cycles[i].size()<<" elementi \n";
     MAX=MCD(MAX,cycles[i].size());
-    //for(int j=0;j<cycles[i].size();j++)
-    //  cout<<"  "<<cycles[i][j];
-    cout<<endl;
+
+//    for(int &b : cycles[i])
+//      cout<<b<<"\t";
+//    cout<<endl<<endl;
   }
+
+
+
+  map<pair<int,int> ,int> pokemon=piazzaPokemon(MAX);
   ofstream out("output.txt");
 
   //cout<<"POKEMON MASSIMI --> "<<MAX<<endl;
   out<<MAX<<endl;
+  for(int v=0;v<N;v++)
+    for(int &w :adj[v])
+    {
+        if(v<w)//altrimenti l'ho già stampato
+        {
 
-
+            pair<int,int> p;
+            p.first=v; p.second=w;
+          if( pokemon.find(p) != pokemon.end())
+          {
+            //cout<<"ARCO "<<v<< " "<<w<<" POKEMON "<<pokemon[p]<<endl;
+            out<<pokemon[p]<<endl;
+          }
+          else
+            //cout<<"ARCO "<<v<< " "<<w<<" POKEMON 0"<<endl;
+            out<<pokemon[p]<<endl;
+        }
+  }
   return 0;
 }
