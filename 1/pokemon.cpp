@@ -81,29 +81,34 @@ map<pair<int,int> ,int> piazzaPokemon(int m)
 
   for(vector<int> &c :cycles)
   {
-    int questo=-1;//tanto lo incremento a 0 prima di assegnarlo
-    for(int i=1;i<c.size();i++)
+    int questo=0;
+    if(c.size()>2)
+    for(int i=0;i<c.size()-1;i++)
       {
 
+
         pair<int,int> x;
-        if(c[i-1]<c[i])
+        if(c[i]<c[i+1])
           {
-            x.first=c[i-1];
-            x.second=c[i];
+            x.first=c[i];
+            x.second=c[i+1];
           }
         else
         {
-          x.first=c[i];
-          x.second=c[i-1];
+          x.first=c[i+1];
+          x.second=c[i];
         }
-
-        pokemon[x]=(++questo)%m;
+        questo=(1+questo)%m;
+        pokemon[x]=questo;
 
       }
     }
 
     return pokemon;
 }
+
+//bool verifica(int m )
+
 
 
 int main(){
@@ -135,6 +140,9 @@ int main(){
 
 
   map<pair<int,int> ,int> pokemon=piazzaPokemon(MAX);
+
+
+
   ofstream out("output.txt");
 
   //cout<<"POKEMON MASSIMI --> "<<MAX<<endl;
