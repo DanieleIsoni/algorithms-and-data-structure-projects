@@ -72,6 +72,25 @@ int MCD(int a, int b)
     return a;
 }
 
+
+
+
+pair<int,int> coppia(int a, int b)
+{
+  pair<int,int> x;
+  if(a<b)
+    {
+      x.first=a;
+      x.second=b;
+    }
+  else
+  {
+    x.first=b;
+    x.second=a;
+  }
+  return x;
+}
+
 map<pair<int,int> ,int> piazzaPokemon(int m)
 {
   map<pair<int,int> ,int> pokemon;
@@ -83,27 +102,43 @@ map<pair<int,int> ,int> piazzaPokemon(int m)
   {
     int questo=0;
     if(c.size()>2)
-    for(int i=0;i<c.size()-1;i++)
+    {
+      //controllo che in nessun arco ci sia già un pokemon
+      map<pair<int,int> ,int>::iterator trovato=pokemon.end();
+
+      for(int i=0;i<c.size()-1 && trovato==pokemon.end();i++)
       {
-
-
-        pair<int,int> x;
-        if(c[i]<c[i+1])
-          {
-            x.first=c[i];
-            x.second=c[i+1];
-          }
-        else
+        map<pair<int,int> ,int>::iterator it=pokemon.find(coppia(c[i],c[i+1]));
+        if(it!=pokemon.end())
         {
-          x.first=c[i+1];
-          x.second=c[i];
+          trovato=it;//calcolo l'indice dell'arco che ho trovato
         }
-        questo=(1+questo)%m;
-        pokemon[x]=questo;
+      }
+
+      if(trovato==pokemon.end())//allora questo è un ciclo normale
+        for(int i=0;i<c.size()-1;i++)
+          {
+            questo=(1+questo)%m;
+            pokemon[coppia(c[i],c[i+1])]=questo;
+          }
+
+      else
+      {
+        questo=(*trovato).second +1;
+        for(int i=0;i<c.size()-1;i++)
+        {
+          if((*trovato).first.first!=c[i] && (*trovato).first.second!=c[i+1])
+          {//arco normale
+            questo=(1+questo)%m;
+            pokemon[coppia(c[i],c[i+1])]=questo;
+          }
+          //altrimenti non faccio niente e mantenfo il vecchio pokemon
+        }
 
       }
     }
 
+  }
     return pokemon;
 }
 
