@@ -8,6 +8,8 @@ vector<vector<int>> adj;
 vector< vector<int> > cicli;
 int numCicli = 0;
 int N,M;
+//variabile di debug
+int salvaCicloCounter = 0;
 
 void stampaCiclo(int s, int v, int * parents){
   cout << "s " << s << " v " << v << endl;
@@ -19,6 +21,7 @@ void stampaCiclo(int s, int v, int * parents){
 }
 
 void salvaCiclo(int s, int v, int * parents){
+  cout << "inizio salvaCiclo " << ++salvaCicloCounter <<"\n\n";
   if(cicli[numCicli].empty())
     cicli[numCicli].resize(0);
   while(s != v){
@@ -40,6 +43,7 @@ void salvaCiclo(int s, int v, int * parents){
 }
 
 void dfs(int s, int * parents, bool * visited){
+  cout << "inizia dfs" << endl;
   visited[s]=true;
   for(int v: adj[s]){
     if (!visited[v]){
@@ -66,7 +70,6 @@ int massimale(){
 
 int main(){
   ifstream in("input.txt");
-//  int N,M;
   in>>N>>M;
   adj.resize(N);
   cicli.resize(M);
@@ -76,8 +79,7 @@ int main(){
       parents[i]=-1;
 
   /*for(int i=0;i<M;i++)
-    cicli[i].resize(M);
-*/
+    cicli[i].resize(M);*/
 
   for(int i=0;i<M;i++){
     int from, to;
@@ -93,12 +95,12 @@ int main(){
   for (int i = 0; i < N; i++)
     dfs(0,parents, visited);
 
-  cout << massimale() << endl;
+  //cout << massimale() << endl;
 
   /*cout << endl << "parents:" << " ";
   for (int i = 0; i < N; i++) {
     cout << parents[i] << " ";
-  }
+  }*/
   cout << endl;
   for (int i = 0; i < cicli.size(); i++){
     for (int j = 0; j<cicli[i].size(); j++){
@@ -106,7 +108,7 @@ int main(){
     }
     if(cicli[i].size() != 0)
       cout << "\n\nlength: " << cicli[i].size() << "\n\n";
-  }*/
+  }
 
 /*
   for(int i=0;i<N;i++){
