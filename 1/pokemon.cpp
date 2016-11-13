@@ -4,6 +4,7 @@
 #include <stack>
 #include <map>
 #include <algorithm>
+#include <set>
 
 using namespace std;
 
@@ -95,7 +96,7 @@ pair<int,int> coppia(int a, int b)
 }
 
 bool eliminaDuplicati(){
-  map<pair<int,int> ,int> pokemon;
+  set<pair<int,int> > archi;
   bool ret=false;
 //vector<int>  cicli;
 //  cicli.resize(cicli.size());
@@ -105,21 +106,26 @@ bool eliminaDuplicati(){
 
     if(c.size()>2)
     {
-
       for(int i=0;i<c.size()-1;i++)
       {
-        map<pair<int,int> ,int>::iterator it=pokemon.find(coppia(c[i],c[i+1]));
-        if(it!=pokemon.end())
+        set<pair<int,int> >::iterator it=archi.find(coppia(c[i],c[i+1]));
+        if(it!=archi.end())
         {
           //elimino quelli in comune dal grafo precedente
-          int a=(*it).first.first;
-          int b=(*it).first.second;
+          int a=(*it).first;
+          int b=(*it).second;
           adj[a].erase(std::remove(adj[a].begin(), adj[a].end(), b), adj[a].end());
 
           adj[b].erase(std::remove(adj[b].begin(), adj[b].end(), a), adj[b].end());
           ret=true;
 
         }
+        else
+        {
+
+            archi.insert(coppia(c[i],c[i+1]));
+        }
+
       }
     }
   }
@@ -197,6 +203,7 @@ int main(){
 //  int N,M;
   in>>N>>M;
   adj.resize(N);
+  adjTemp.resize(N);
   cycles.resize(N);
 
   for(int i=0;i<M;i++){
@@ -209,6 +216,8 @@ int main(){
   }
 
   dfs();
+
+  cout<<"ciao mona"<<endl;
   eliminaDuplicati();
   dfs();
 
