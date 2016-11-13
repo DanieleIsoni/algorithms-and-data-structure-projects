@@ -217,8 +217,8 @@ int main(){
 
   dfs();
 
-  cout<<"ciao mona"<<endl;
-  eliminaDuplicati();
+eliminaDuplicati();
+
   dfs();
 
   int MAX=cycles[0].size();
