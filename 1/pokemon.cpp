@@ -114,9 +114,9 @@ bool eliminaDuplicati(){
           //elimino quelli in comune dal grafo precedente
           int a=(*it).first.first;
           int b=(*it).first.second;
-          adj[a].erase(adj[a].find(adj[a].begin(),adj[a].end(),b));
+          adj[a].erase(std::remove(adj[a].begin(), adj[a].end(), b), adj[a].end());
 
-          adj[b].erase(adj[b].find(adj[b].begin(),adj[b].end(),a));
+          adj[b].erase(std::remove(adj[b].begin(), adj[b].end(), a), adj[b].end());
           ret=true;
 
         }
