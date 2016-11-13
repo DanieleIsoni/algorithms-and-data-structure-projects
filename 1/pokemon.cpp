@@ -124,14 +124,21 @@ map<pair<int,int> ,int> piazzaPokemon(int m)
 
       else
       {
-        questo=(*trovato).second +1;
+        questo=(*trovato).second;
+        cout<<"TROVATO -> "<<questo<<endl;
         for(int i=0;i<c.size()-1;i++)
         {
-          if((*trovato).first.first!=c[i] && (*trovato).first.second!=c[i+1])
+
+          pair <int,int> test = coppia(c[i],c[i+1]);
+          cout<<(*trovato).first.first<<" "<<test.first<<" AND "<<(*trovato).first.second<<" "<<test.second<<endl;
+          if((*trovato).first.first!=test.first || (*trovato).first.second!=test.second)
           {//arco normale
             questo=(1+questo)%m;
-            pokemon[coppia(c[i],c[i+1])]=questo;
+            pokemon[test]=questo;
+
+              cout<<"questo ->"<<questo<<endl;
           }
+
           //altrimenti non faccio niente e mantenfo il vecchio pokemon
         }
 
