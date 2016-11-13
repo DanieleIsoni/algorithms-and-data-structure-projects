@@ -3,9 +3,11 @@
 #include <vector>
 #include <stack>
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
+vector<vector<int>> adjTemp;
 vector<vector<int>> adj;
 vector<vector<int>> cycles;
 int numeroCicli=0;
@@ -19,10 +21,10 @@ void calcolaLung(int from, int to, int * padri){
     while(from != to){
       count++;
       from=padri[from];
-      //cout<<" added "<<from<<endl;
+      cout<<" added "<<from<<endl;
       cycles[numeroCicli].push_back(from);
     }
-  //  cout<<"cliclo n. "<<numeroCicli<<" ha "<<count<<" elementi "<<endl;
+    cout<<"cliclo n. "<<numeroCicli<<" ha "<<count<<" elementi "<<endl;
     numeroCicli++;
   }
 
@@ -31,6 +33,7 @@ void dfs_visit(int u, int * color, int * padri){
     for(int v : adj[u]){
       if(color[v]==0){
         padri[v]=u;
+        cout<<"from "<<u<<" to "<<v<<endl;
         dfs_visit(v,color,padri);
       }
       if(color[v]==1 && v != padri[u])
@@ -91,6 +94,39 @@ pair<int,int> coppia(int a, int b)
   return x;
 }
 
+bool eliminaDuplicati(){
+  map<pair<int,int> ,int> pokemon;
+  bool ret=false;
+//vector<int>  cicli;
+//  cicli.resize(cicli.size());
+
+  for(vector<int> &c :cycles)
+  {
+
+    if(c.size()>2)
+    {
+
+      for(int i=0;i<c.size()-1;i++)
+      {
+        map<pair<int,int> ,int>::iterator it=pokemon.find(coppia(c[i],c[i+1]));
+        if(it!=pokemon.end())
+        {
+          //elimino quelli in comune dal grafo precedente
+          int a=(*it).first.first;
+          int b=(*it).first.second;
+          adj[a].erase(adj[a].find(adj[a].begin(),adj[a].end(),b));
+
+          adj[b].erase(adj[b].find(adj[b].begin(),adj[b].end(),a));
+          ret=true;
+
+        }
+      }
+    }
+  }
+    return ret;
+
+}
+
 map<pair<int,int> ,int> piazzaPokemon(int m)
 {
   map<pair<int,int> ,int> pokemon;
@@ -138,6 +174,9 @@ map<pair<int,int> ,int> piazzaPokemon(int m)
 
               cout<<"questo ->"<<questo<<endl;
           }
+          else{
+            cout<<"trovato arco in comune"<<endl;
+          }
 
           //altrimenti non faccio niente e mantenfo il vecchio pokemon
         }
@@ -165,18 +204,22 @@ int main(){
     in>>from>>to;
     adj[from].push_back(to);
     adj[to].push_back(from);
+    adjTemp[from].push_back(to);
+    adjTemp[to].push_back(from);
   }
 
   dfs();
+  eliminaDuplicati();
+  dfs();
 
   int MAX=cycles[0].size();
-  for(int i=1;i<numeroCicli;i++){
-    //cout<<"Il ciclo "<<i<<" ha "<<cycles[i].size()<<" elementi \n";
+  for(int i=0;i<numeroCicli;i++){
+    cout<<"Il ciclo "<<i<<" ha "<<cycles[i].size()<<" elementi \n";
     MAX=MCD(MAX,cycles[i].size());
 
-//    for(int &b : cycles[i])
-//      cout<<b<<"\t";
-//    cout<<endl<<endl;
+   for(int &b : cycles[i])
+      cout<<b<<"\t";
+    cout<<endl<<endl;
   }
 
 
@@ -190,7 +233,7 @@ int main(){
   //cout<<"POKEMON MASSIMI --> "<<MAX<<endl;
   out<<MAX<<endl;
   for(int v=0;v<N;v++)
-    for(int &w :adj[v])
+    for(int &w :adjTemp[v])
     {
         if(v<w)//altrimenti l'ho già stampato
         {
