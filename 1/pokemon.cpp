@@ -129,6 +129,7 @@ bool eliminaDuplicati(){
 
       }
         //cout << "cont:" <<cont<<" size: "<<c.size()<< endl;
+        //se il numero di achi in comune tra almeno 2 cicli è pari
         if(cont%2==1)
           return true;
     }
@@ -169,7 +170,8 @@ map<pair<int,int> ,int> piazzaPokemon(int m)
             pokemon[coppia(c[i],c[i+1])]=questo;
           }
 
-    /*  else
+    /* LE RIGHE QUA SALTANO L'ARCO CON IL POKEMON GIÀ POSIZIONATO
+    else
       {
         questo=(*trovato).second;
         cout<<"TROVATO -> "<<questo<<endl;
@@ -235,7 +237,7 @@ int main(){
       cout<<b<<"\t";
     cout<<endl<<endl;
   }
-  if(dispari)
+  if(dispari && MAX!=1)
     MAX/=2;
 
 
