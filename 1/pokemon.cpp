@@ -118,7 +118,7 @@ bool eliminaDuplicati(){
           adj[a].erase(std::remove(adj[a].begin(), adj[a].end(), b), adj[a].end());
           cont++;
           adj[b].erase(std::remove(adj[b].begin(), adj[b].end(), a), adj[b].end());
-          //ret=true;
+          ret=true;
 
         }
         else
@@ -128,16 +128,6 @@ bool eliminaDuplicati(){
         }
 
       }
-      set<pair<int,int> >::iterator it=archi.find(coppia(c[c.size()-1],c[0]));
-      if(it!=archi.end())
-      {
-        cont++;
-        //int a=(*it).first;
-        //int b=(*it).second;
-        //adj[a].erase(std::remove(adj[a].begin(), adj[a].end(), b), adj[a].end());
-        //adj[b].erase(std::remove(adj[b].begin(), adj[b].end(), a), adj[b].end());
-      }
-
         //cout << "cont:" <<cont<<" size: "<<c.size()<< endl;
         //se il numero di achi in comune tra almeno 2 cicli è pari
         if(cont%2==1)
@@ -145,7 +135,7 @@ bool eliminaDuplicati(){
     }
 
   }
-    return false;
+    return ret;
 
 }
 
