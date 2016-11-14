@@ -117,8 +117,10 @@ bool eliminaDuplicati(){
           int b=(*it).second;
           adj[a].erase(std::remove(adj[a].begin(), adj[a].end(), b), adj[a].end());
           cont++;
+<<<<<<< HEAD
+<<<<<<< HEAD
           adj[b].erase(std::remove(adj[b].begin(), adj[b].end(), a), adj[b].end());
-          ret=true;
+          //ret=true;
 
         }
         else
@@ -128,6 +130,16 @@ bool eliminaDuplicati(){
         }
 
       }
+      set<pair<int,int> >::iterator it=archi.find(coppia(c[c.size()-1],c[0]));
+      if(it!=archi.end())
+      {
+        cont++;
+        //int a=(*it).first;
+        //int b=(*it).second;
+        //adj[a].erase(std::remove(adj[a].begin(), adj[a].end(), b), adj[a].end());
+        //adj[b].erase(std::remove(adj[b].begin(), adj[b].end(), a), adj[b].end());
+      }
+
         //cout << "cont:" <<cont<<" size: "<<c.size()<< endl;
         //se il numero di achi in comune tra almeno 2 cicli è pari
         if(cont%2==1)
@@ -135,9 +147,74 @@ bool eliminaDuplicati(){
     }
 
   }
-    return ret;
+    return false;
 
 }
+
+bool eliminaDuplicati2(){
+  set<pair<int,int> > archi;
+  bool ret=false;
+//vector<int>  cicli;
+//  cicli.resize(cicli.size());
+
+  for(vector<int> &c :cycles)
+  {
+
+    if(c.size()>2)
+    {
+      int cont=0;
+      for(int i=0;i<c.size()-1;i++)
+      {
+        set<pair<int,int> >::iterator it=archi.find(coppia(c[i],c[i+1]));
+        if(it!=archi.end())
+        {
+          //elimino quelli in comune dal grafo precedente
+          int a=(*it).first;
+          int b=(*it).second;
+          adj[a].erase(std::remove(adj[a].begin(), adj[a].end(), b), adj[a].end());
+          cont++;
+=======
+>>>>>>> origin/Cicli_innestati
+=======
+>>>>>>> origin/Cicli_innestati
+          adj[b].erase(std::remove(adj[b].begin(), adj[b].end(), a), adj[b].end());
+          return true;
+
+        }
+        else
+        {
+
+            archi.insert(coppia(c[i],c[i+1]));
+        }
+
+      }
+<<<<<<< HEAD
+<<<<<<< HEAD
+      set<pair<int,int> >::iterator it=archi.find(coppia(c[c.size()-1],c[0]));
+      if(it!=archi.end())
+      {
+        cont++;
+        //int a=(*it).first;
+        //int b=(*it).second;
+        //adj[a].erase(std::remove(adj[a].begin(), adj[a].end(), b), adj[a].end());
+        //adj[b].erase(std::remove(adj[b].begin(), adj[b].end(), a), adj[b].end());
+      }
+
+=======
+>>>>>>> origin/Cicli_innestati
+=======
+>>>>>>> origin/Cicli_innestati
+        //cout << "cont:" <<cont<<" size: "<<c.size()<< endl;
+        //se il numero di achi in comune tra almeno 2 cicli è pari
+        if(cont%2==1)
+          return true;
+    }
+
+  }
+    return false;
+
+}
+
 
 map<pair<int,int> ,int> piazzaPokemon(int m)
 {
@@ -226,6 +303,17 @@ int main(){
 
  bool dispari=eliminaDuplicati();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+ int j = 0;
+ for (auto x: adjTemp){
+   adj[j] = x;
+ }
+ dispari = dispari || eliminaDuplicati2();
+=======
+>>>>>>> origin/Cicli_innestati
+=======
+>>>>>>> origin/Cicli_innestati
   //dfs();
 
   int MAX=cycles[0].size();
