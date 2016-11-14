@@ -106,6 +106,7 @@ bool eliminaDuplicati(){
 
     if(c.size()>2)
     {
+      int cont=0;
       for(int i=0;i<c.size()-1;i++)
       {
         set<pair<int,int> >::iterator it=archi.find(coppia(c[i],c[i+1]));
@@ -115,7 +116,7 @@ bool eliminaDuplicati(){
           int a=(*it).first;
           int b=(*it).second;
           adj[a].erase(std::remove(adj[a].begin(), adj[a].end(), b), adj[a].end());
-
+          cont++;
           adj[b].erase(std::remove(adj[b].begin(), adj[b].end(), a), adj[b].end());
           ret=true;
 
@@ -127,7 +128,11 @@ bool eliminaDuplicati(){
         }
 
       }
+        //cout << "cont:" <<cont<<" size: "<<c.size()<< endl;
+        if(cont%2==1)
+          return true;
     }
+
   }
     return ret;
 
@@ -217,9 +222,9 @@ int main(){
 
   dfs();
 
-eliminaDuplicati();
+ bool dispari=eliminaDuplicati();
 
-  dfs();
+  //dfs();
 
   int MAX=cycles[0].size();
   for(int i=0;i<numeroCicli;i++){
@@ -230,7 +235,8 @@ eliminaDuplicati();
       cout<<b<<"\t";
     cout<<endl<<endl;
   }
-
+  if(dispari)
+    MAX/=2;
 
 
   map<pair<int,int> ,int> pokemon=piazzaPokemon(MAX);
