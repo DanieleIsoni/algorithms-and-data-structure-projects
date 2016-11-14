@@ -151,7 +151,7 @@ map<pair<int,int> ,int> piazzaPokemon(int m)
     if(c.size()>2)
     {
       //controllo che in nessun arco ci sia già un pokemon
-      map<pair<int,int> ,int>::iterator trovato=pokemon.end();
+      /* map<pair<int,int> ,int>::iterator trovato=pokemon.end();
 
       for(int i=0;i<c.size()-1 && trovato==pokemon.end();i++)
       {
@@ -163,13 +163,13 @@ map<pair<int,int> ,int> piazzaPokemon(int m)
       }
 
       if(trovato==pokemon.end())//allora questo è un ciclo normale
-        for(int i=0;i<c.size()-1;i++)
+    */    for(int i=0;i<c.size()-1;i++)
           {
             questo=(1+questo)%m;
             pokemon[coppia(c[i],c[i+1])]=questo;
           }
 
-      else
+    /*  else
       {
         questo=(*trovato).second;
         cout<<"TROVATO -> "<<questo<<endl;
@@ -192,7 +192,7 @@ map<pair<int,int> ,int> piazzaPokemon(int m)
           //altrimenti non faccio niente e mantenfo il vecchio pokemon
         }
 
-      }
+      }*/
     }
 
   }
