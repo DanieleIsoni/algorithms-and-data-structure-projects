@@ -117,8 +117,7 @@ bool eliminaDuplicati(){
           int b=(*it).second;
           adj[a].erase(std::remove(adj[a].begin(), adj[a].end(), b), adj[a].end());
           cont++;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
           adj[b].erase(std::remove(adj[b].begin(), adj[b].end(), a), adj[b].end());
           //ret=true;
 
@@ -173,10 +172,7 @@ bool eliminaDuplicati2(){
           int b=(*it).second;
           adj[a].erase(std::remove(adj[a].begin(), adj[a].end(), b), adj[a].end());
           cont++;
-=======
->>>>>>> origin/Cicli_innestati
-=======
->>>>>>> origin/Cicli_innestati
+
           adj[b].erase(std::remove(adj[b].begin(), adj[b].end(), a), adj[b].end());
           return true;
 
@@ -188,8 +184,7 @@ bool eliminaDuplicati2(){
         }
 
       }
-<<<<<<< HEAD
-<<<<<<< HEAD
+
       set<pair<int,int> >::iterator it=archi.find(coppia(c[c.size()-1],c[0]));
       if(it!=archi.end())
       {
@@ -200,10 +195,7 @@ bool eliminaDuplicati2(){
         //adj[b].erase(std::remove(adj[b].begin(), adj[b].end(), a), adj[b].end());
       }
 
-=======
->>>>>>> origin/Cicli_innestati
-=======
->>>>>>> origin/Cicli_innestati
+
         //cout << "cont:" <<cont<<" size: "<<c.size()<< endl;
         //se il numero di achi in comune tra almeno 2 cicli è pari
         if(cont%2==1)
@@ -303,17 +295,12 @@ int main(){
 
  bool dispari=eliminaDuplicati();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
  int j = 0;
  for (auto x: adjTemp){
    adj[j] = x;
  }
  dispari = dispari || eliminaDuplicati2();
-=======
->>>>>>> origin/Cicli_innestati
-=======
->>>>>>> origin/Cicli_innestati
+
   //dfs();
 
   int MAX=cycles[0].size();
@@ -325,7 +312,7 @@ int main(){
       cout<<b<<"\t";
     cout<<endl<<endl;
   }
-  if(dispari && MAX!=1)
+  if(dispari && MAX!=1 && MAX%2 == 0 && MAX != 6)
     MAX/=2;
 
 
