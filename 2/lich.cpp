@@ -8,11 +8,26 @@ using namespace std;
 
 typedef pair<int,int> coppia;
 
-
+map<coppia,int> MEMO;
 vector<vector<coppia> > adj;
 vector<long unsigned int> L;
 stack<int> foglie;
 
+int dfs(int node, int from, int ** M){
+  int ret=0;
+  if(from !=-1 && M[node][from]!=-1){
+    return M[node][from];
+  }
+
+  for(auto &x : adj[node]){
+    if(from!=x.first){
+      ret=max(dfs(x.first,node,M)+x.second,ret);
+    }
+  }
+  M[node][from]=ret;
+  return ret;
+}
+/*
 int cammini(map<int,int> &MEMO, int r, int from)
 {
   int m;
@@ -34,7 +49,7 @@ int cammini(map<int,int> &MEMO, int r, int from)
   }
   return MEMO[r];
 }
-
+*/
 
 int main(){
   ifstream in("input.txt");
@@ -57,7 +72,7 @@ int main(){
     L.push_back(c);
   }
 
-  map<int,int> MEMO;
+/*  map<int,int> MEMO;
   cammini(MEMO,0,-1);
 
   while(!foglie.empty())
@@ -69,10 +84,33 @@ int main(){
 
 
   for(auto &x: MEMO)
-    cout<<x.first<<"\t"<<x.second<<endl;
+    cout<<x.first<<"\t"<<x.second<<endl;*/
+    int ** M = new int *[N];
+    for(int i = 0; i <N; i++)
+      M[i] = new int[N];
+    for (int i = 0; i < N; i++) {
+      for (int a = 0; a < N; a++) {
+        M[i][a]=-1;
+      }
+    }
 
+
+
+
+
+  int cammini[N];
+  for(int i=0;i<N;i++){
+    cammini[i]=dfs(i,-1,M);
+    cout<<cammini[i]<<" ";
+  }
 
   ofstream out("output.txt");
+  for (int i = 0; i < N; i++) {
+    for (int a = 0; a < N; a++) {
+      out<<M[i][a]<<";";
 
+    }
+    out<<endl;
+  }
   return 0;
 }
