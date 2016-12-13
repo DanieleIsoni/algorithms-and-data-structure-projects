@@ -8,15 +8,15 @@ using namespace std;
 
 typedef pair<int,int> coppia;
 
-unsigned long int N;
-map<unsigned long int,int> MEMO;
+long int N;
+map<long int,int> MEMO;
 vector<vector<coppia> > adj;
 vector<long unsigned int> L;
 stack<int> foglie;
 
 int dfs(int node, int from){
   int ret=0;
-  unsigned long int i=node+(N*(from+1));//coppia(node,from);
+  long int i=node+(N*(from+1));//coppia(node,from);
   int m=MEMO[i];
   if(from !=-1 && m!=0){
     return m;
@@ -43,7 +43,7 @@ int main(){
     adj[b].push_back(coppia(a,c));
   }
 
-  unsigned long int nl;
+  long int nl;
   in>>nl;
   L.resize(nl);
   for(int i=0;i<nl;i++){
