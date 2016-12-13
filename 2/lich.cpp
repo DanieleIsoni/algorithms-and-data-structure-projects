@@ -13,18 +13,18 @@ vector<vector<coppia> > adj;
 vector<long unsigned int> L;
 stack<int> foglie;
 
-int dfs(int node, int from, int ** M){
+int dfs(int node, int from){
   int ret=0;
-  if(from !=-1 && M[node][from]!=-1){
-    return M[node][from];
+  if(from !=-1 && MEMO.find(coppia(node,from))!=MEMO.end() ){
+    return MEMO[coppia(node,from)];
   }
 
   for(auto &x : adj[node]){
     if(from!=x.first){
-      ret=max(dfs(x.first,node,M)+x.second,ret);
+      ret=max(dfs(x.first,node)+x.second,ret);
     }
   }
-  M[node][from]=ret;
+  MEMO[coppia(node,from)]=ret;
   return ret;
 }
 /*
@@ -85,14 +85,6 @@ int main(){
 
   for(auto &x: MEMO)
     cout<<x.first<<"\t"<<x.second<<endl;*/
-    int ** M = new int *[N];
-    for(int i = 0; i <N; i++)
-      M[i] = new int[N];
-    for (int i = 0; i < N; i++) {
-      for (int a = 0; a < N; a++) {
-        M[i][a]=-1;
-      }
-    }
 
 
 
@@ -100,17 +92,11 @@ int main(){
 
   int cammini[N];
   for(int i=0;i<N;i++){
-    cammini[i]=dfs(i,-1,M);
+    cammini[i]=dfs(i,-1);
     cout<<cammini[i]<<" ";
   }
 
   ofstream out("output.txt");
-  for (int i = 0; i < N; i++) {
-    for (int a = 0; a < N; a++) {
-      out<<M[i][a]<<";";
 
-    }
-    out<<endl;
-  }
   return 0;
 }
