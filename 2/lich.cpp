@@ -8,15 +8,16 @@ using namespace std;
 
 typedef pair<int,int> coppia;
 
-map<coppia,int> MEMO;
+unsigned long int N;
+map<unsigned long int,int> MEMO;
 vector<vector<coppia> > adj;
 vector<long unsigned int> L;
 stack<int> foglie;
 
 int dfs(int node, int from){
   int ret=0;
-  coppia i=coppia(node,from);
-  map<coppia,int>::iterator it=MEMO.find(i);
+  unsigned long int i=node+(N*(from+1));//coppia(node,from);
+  map<unsigned long int,int>::iterator it=MEMO.find(i);
   if(from !=-1 && it!=MEMO.end() ){
     return (*it).second;
   }
@@ -33,7 +34,6 @@ int dfs(int node, int from){
 
 int main(){
   ifstream in("input.txt");
-  unsigned long int N;
   in >> N;
   adj.resize(N);
   for(int i=0;i<N-1;i++){
@@ -59,7 +59,7 @@ int main(){
   int cammini[N];
   for(int i=0;i<N;i++){
     cammini[i]=dfs(i,-1);
-    //out<<cammini[i]<<"\n";
+    cout<<cammini[i]<<"\n";
   }
 
 
