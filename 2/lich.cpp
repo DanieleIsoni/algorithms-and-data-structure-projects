@@ -15,8 +15,10 @@ stack<int> foglie;
 
 int dfs(int node, int from){
   int ret=0;
-  if(from !=-1 && MEMO.find(coppia(node,from))!=MEMO.end() ){
-    return MEMO[coppia(node,from)];
+  coppia i=coppia(node,from);
+  map<coppia,int>::iterator it=MEMO.find(i);
+  if(from !=-1 && it!=MEMO.end() ){
+    return (*it).second;
   }
 
   for(auto &x : adj[node]){
@@ -24,32 +26,10 @@ int dfs(int node, int from){
       ret=max(dfs(x.first,node)+x.second,ret);
     }
   }
-  MEMO[coppia(node,from)]=ret;
+  MEMO[i]=ret;
   return ret;
 }
-/*
-int cammini(map<int,int> &MEMO, int r, int from)
-{
-  int m;
-  if(MEMO.find(r)==MEMO.end() || MEMO[r]==0)
-  {
-    int mx=0;
-    for(auto &x : adj[r])
-      {
-        if(from!=x.first)
-          {
-            m=cammini(MEMO,x.first,r);
-            if(m==0)
-              foglie.push(x.first);
-          mx=max(mx,m+x.second);
-          }
-      }
 
-    MEMO[r]=mx;
-  }
-  return MEMO[r];
-}
-*/
 
 int main(){
   ifstream in("input.txt");
@@ -72,31 +52,16 @@ int main(){
     L.push_back(c);
   }
 
-/*  map<int,int> MEMO;
-  cammini(MEMO,0,-1);
-
-  while(!foglie.empty())
-  {
-    int s=foglie.top();foglie.pop();
-    cammini(MEMO,s,-1);
-  }
 
 
 
-  for(auto &x: MEMO)
-    cout<<x.first<<"\t"<<x.second<<endl;*/
-
-
-
-
-
+  ofstream out("output.txt");
   int cammini[N];
   for(int i=0;i<N;i++){
     cammini[i]=dfs(i,-1);
-    cout<<cammini[i]<<" ";
+    out<<cammini[i]<<"\n";
   }
 
-  ofstream out("output.txt");
 
   return 0;
 }
