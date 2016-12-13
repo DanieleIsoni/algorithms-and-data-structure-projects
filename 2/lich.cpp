@@ -59,7 +59,7 @@ int main(){
   int cammini[N];
   for(int i=N-1;i>=0;i--){
     cammini[i]=dfs(i,-1);
-    cout<<cammini[i]<<"\n";
+    //cout<<cammini[i]<<"\n";
   }
 
 
