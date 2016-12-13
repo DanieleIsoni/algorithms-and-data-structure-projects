@@ -17,9 +17,9 @@ stack<int> foglie;
 int dfs(int node, int from){
   int ret=0;
   unsigned long int i=node+(N*(from+1));//coppia(node,from);
-  map<unsigned long int,int>::iterator it=MEMO.find(i);
-  if(from !=-1 && it!=MEMO.end() ){
-    return (*it).second;
+  int m=MEMO[i];
+  if(from !=-1 && m!=0){
+    return m;
   }
 
   for(auto &x : adj[node]){
@@ -59,7 +59,7 @@ int main(){
   int cammini[N];
   for(int i=0;i<N;i++){
     cammini[i]=dfs(i,-1);
-    cout<<cammini[i]<<"\n";
+  //  cout<<cammini[i]<<"\n";
   }
 
 
