@@ -9,8 +9,10 @@ for i in $(seq 0 19); do
   #TIME="$(bash -c "time ./lich > /dev/null" 2>&1)"
   start=`date +%s%N`
   ./lich >/dev/null
+  #sleep 1
   end=`date +%s%N`
-  TIME=`awk "BEGIN { print ($end - $start)/10000000/60 }" `
+  #echo `expr $end - $start`
+  TIME=`awk "BEGIN { print ($end - $start)/1000000000 }" `
   if diff output.txt dataset/output/output$i.txt > /dev/null ; then
     echo "-->$TIME\t------> ${GREEN}OUTPUT CORRETTO${NC}"
   else
