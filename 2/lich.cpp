@@ -63,35 +63,23 @@ int trova(long int root, long int from,  long int L, long int* cammini)
     int b=-1;
     for(auto &x : adj[root])
       {
-        if(x.first!=from && (max(dmx, cammini[x.first])- min(dmn, cammini[x.first]))<=L)
+        int tempMin = min(dmn, cammini[x.first]);
+        int tempMax = max(dmx, cammini[x.first]);
+        if(x.first!=from && abs(tempMin-tempMax)<=L){
+          dmn=tempMin;
+          dmx=tempMax;
           c+=trova(x.first,root,L,cammini);
+        }
         else if(x.first!=from)
         {
           b=max(b,trova(x.first,root,L,cammini));
         }
       }
 
-
       return max(c,b);
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -114,9 +102,6 @@ int main(){
     in>>c;
     L.push_back(c);
   }
-
-
-
 
   ofstream out("output.txt");
   long int cammini[N];
