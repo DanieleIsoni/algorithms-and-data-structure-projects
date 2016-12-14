@@ -42,10 +42,11 @@ long int dmn=4000000, dmx=0;
 int trova(long int root, long int from,  long int L, long int* cammini)
 {
   cout<<"TROVA "<<root<<" "<<from<<endl;
-  if(adj[root].size()==1 && root!=from)
+/*  if(adj[root].size()==1 && root!=from)
   {
-    //if(cammini[*(adj[root].begin())->first]>= dmn &&  cammini[*(adj[root].begin())->first]>=)
     //FOGLIA
+return 1;
+
     int tempMin = min(dmn, cammini[root]);
     int tempMax = max(dmx, cammini[root]);
     if(abs(tempMin-tempMax)<=L)
@@ -55,9 +56,9 @@ int trova(long int root, long int from,  long int L, long int* cammini)
         return 1;
       }
     else
-      return 0;
-  }
-  else
+      return 0;*/
+//  }
+//  else
   {
     int c=1;
     int b=-1;
@@ -65,7 +66,7 @@ int trova(long int root, long int from,  long int L, long int* cammini)
       {
         int tempMin = min(dmn, cammini[x.first]);
         int tempMax = max(dmx, cammini[x.first]);
-        if(x.first!=from && abs(tempMin-tempMax)<=L){
+        if(x.first!=from && tempMax-tempMin<=L){
           dmn=tempMin;
           dmx=tempMax;
           c+=trova(x.first,root,L,cammini);
@@ -114,7 +115,7 @@ int main(){
   {
     int val=trova(0,-1,L[i],cammini);
     cout<<L[i]<<"->"<<val<<endl;
-    out<<L[i]<<endl;
+    out<<val<<endl;
     dmn=4000000;
     dmx=-1;
 
