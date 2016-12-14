@@ -37,7 +37,7 @@ int dfs(int node, int from){
 }
 
 
-int valori[10000];
+int massimomassimo=0;
 void dfsInsimi(int node, int father, int * cammini, int mn, int mx, int size, int L){
   for(auto &x : adj[node]){
       if(father!=x.first){
@@ -50,7 +50,7 @@ void dfsInsimi(int node, int father, int * cammini, int mn, int mx, int size, in
       else{
         dfsInsimi(x.first,node,cammini,cammini[x.first],cammini[x.first],1,L);
 
-            cout<<"Finito --> "<<size<<endl;
+            massimomassimo=max(massimomassimo,size);
       }
 
     }
@@ -95,6 +95,8 @@ for (int i = 0; i < nl; i++) {
   cout<<"------ "<<L[i]<<" -------"<<endl;
 
   dfsInsimi(0,-1,cammini,cammini[0],cammini[0],1,L[i]);
+  out<<massimomassimo<<endl;
+  massimomassimo=0;
   /* code */
 }
 
