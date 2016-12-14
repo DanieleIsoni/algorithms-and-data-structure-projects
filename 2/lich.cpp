@@ -38,25 +38,42 @@ int dfs(int node, int from){
 
 
 
-
-int trova(long int root, long int from, long int dmn, long int dmx)
+long int dmn=4000000, dmx=0;
+int trova(long int root, long int from,  long int L, long int* cammini)
 {
-  int c=0;
-  for(auto &x :adj[root])
+  cout<<"TROVA "<<root<<" "<<from<<endl;
+  if(adj[root].size()==1 && root!=from)
   {
-    int mx=0;
-    if(x.first!=from && abs(cammini[x.first]-dmn)<=L && abs(cammini[x.first]-dmx)<=L)
-    {
-      c++;
-      mx=max(mx, max(trova(x.first, root,cammini[x.first],cammini[x.first]),trova(x.first, root, )));
-    }
+    //if(cammini[*(adj[root].begin())->first]>= dmn &&  cammini[*(adj[root].begin())->first]>=)
+    //FOGLIA
+    int tempMin = min(dmn, cammini[root]);
+    int tempMax = max(dmx, cammini[root]);
+    if(abs(tempMin-tempMax)<=L)
+      {
+        dmn=tempMin;
+        dmx=tempMax;
+        return 1;
+      }
+    else
+      return 0;
   }
-  if(c==0)
+  else
   {
-    return 1;
-  }
+    int c=1;
+    int b=-1;
+    for(auto &x : adj[root])
+      {
+        if(x.first!=from && (max(dmx, cammini[x.first])- min(dmn, cammini[x.first]))<=L)
+          c+=trova(x.first,root,L,cammini);
+        else if(x.first!=from)
+        {
+          b=max(b,trova(x.first,root,L,cammini));
+        }
+      }
 
 
+      return max(c,b);
+  }
 
 }
 
@@ -102,12 +119,21 @@ int main(){
 
 
   ofstream out("output.txt");
-  int cammini[N];
+  long int cammini[N];
   for(int i=0;i<N;i++){
     cammini[i]=dfs(i,-1);
     cout<<cammini[i]<<"\n";
   }
 
+  for(int i=0;i<nl;i++)
+  {
+    int val=trova(0,-1,L[i],cammini);
+    cout<<L[i]<<"->"<<val<<endl;
+    out<<L[i]<<endl;
+    dmn=4000000;
+    dmx=-1;
+
+  }
 
 
   return 0;
