@@ -37,27 +37,45 @@ int dfs(int node, int from){
 }
 
 
-int massimomassimo=0;
-void dfsInsimi(int node, int father, int * cammini, int mn, int mx, int size, int L){
-  for(auto &x : adj[node]){
-      if(father!=x.first){
-        //cout<<size<<" "<<x.first<<" "<<node<<" "<<father<<" ADS "<<mn<<" "<<mx<<" "<<cammini[x.first]<<" if -->"<<(abs(mn-cammini[x.first])<=L && abs(mx-cammini[x.first])<=L)<<endl;
 
-      int mn2 = min(mn,cammini[x.first]);
-      int mx2 = max(mx,cammini[x.first]);
-      if(abs(mn-cammini[x.first])<=L && abs(mx-cammini[x.first])<=L)
-        dfsInsimi(x.first,node,cammini,mn2,mx2,size+1,L);
-      else{
-        dfsInsimi(x.first,node,cammini,cammini[x.first],cammini[x.first],1,L);
 
-            massimomassimo=max(massimomassimo,size);
-      }
-
+int trova(long int root, long int from, long int dmn, long int dmx)
+{
+  int c=0;
+  for(auto &x :adj[root])
+  {
+    int mx=0;
+    if(x.first!=from && abs(cammini[x.first]-dmn)<=L && abs(cammini[x.first]-dmx)<=L)
+    {
+      c++;
+      mx=max(mx, max(trova(x.first, root,cammini[x.first],cammini[x.first]),trova(x.first, root, )));
     }
-
   }
-//  if(counter==0)
+  if(c==0)
+  {
+    return 1;
+  }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 int main(){
@@ -89,17 +107,6 @@ int main(){
     cammini[i]=dfs(i,-1);
     cout<<cammini[i]<<"\n";
   }
-
-  //bfs(0,N,cammini);
-for (int i = 0; i < nl; i++) {
-  cout<<"------ "<<L[i]<<" -------"<<endl;
-
-  dfsInsimi(0,-1,cammini,cammini[0],cammini[0],1,L[i]);
-  out<<massimomassimo<<endl;
-  massimomassimo=0;
-  /* code */
-}
-
 
 
 
