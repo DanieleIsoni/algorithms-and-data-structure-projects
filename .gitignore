@@ -6,4 +6,5 @@
 2/lich.exe
 2/a.exe
 2/input.txt
-
+**/*/.DS_Store
+.DS_Store
